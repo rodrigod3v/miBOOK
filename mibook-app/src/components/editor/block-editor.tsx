@@ -5,7 +5,7 @@ import {
   BlockNoteViewRaw,
   useCreateBlockNote,
 } from "@blocknote/react";
-import type { Block } from "@blocknote/core";
+import type { Block, PartialBlock } from "@blocknote/core";
 import "@blocknote/react/style.css";
 import { useTheme } from "next-themes";
 import { Clock, History, Save } from "lucide-react";
@@ -59,9 +59,13 @@ export function BlockEditor({
 
   const initialContentParsed = useMemo(() => {
     try {
-      return JSON.parse(initialContent);
+      const parsed = JSON.parse(initialContent);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed as PartialBlock[];
+      }
+      return undefined;
     } catch {
-      return [];
+      return undefined;
     }
   }, [initialContent]);
 
