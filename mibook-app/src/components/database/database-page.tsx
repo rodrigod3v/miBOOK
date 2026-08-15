@@ -188,7 +188,38 @@ export function DatabasePage({
     emitRefresh(viewId, "db");
   }
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortFieldId, setSortFieldId] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
   const visibleFields = useMemo(() => fields.filter((f) => !f.hidden), [fields]);
+
+  const filteredRows = useMemo(() => {
+    let list = [...rows];
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter((r) => {
+        try {
+          const vals = Object.values(JSON.parse(r.values || "{}")).join(" ").toLowerCase();
+          return vals.includes(q);
+        } catch {
+          return false;
+        }
+      });
+    }
+    if (sortFieldId) {
+      list.sort((a, b) => {
+        const valA = getCellValue(a, sortFieldId);
+        const valB = getCellValue(b, sortFieldId);
+        if (valA === valB) return 0;
+        if (valA === null || valA === undefined) return 1;
+        if (valB === null || valB === undefined) return -1;
+        const comp = String(valA).localeCompare(String(valB), undefined, { numeric: true });
+        return sortOrder === "asc" ? comp : -comp;
+      });
+    }
+    return list;
+  }, [rows, searchQuery, sortFieldId, sortOrder]);
 
   async function updateFieldOptions(fieldId: string, options: SelectOption[]) {
     const f = await http.patch<DbField>(
@@ -201,7 +232,7 @@ export function DatabasePage({
 
   const shared = {
     fields,
-    rows,
+    rows: filteredRows,
     visibleFields,
     config,
     saveConfig,
@@ -216,7 +247,7 @@ export function DatabasePage({
 
   return (
     <div className="flex h-full flex-col">
-      <div className="border-b">
+      <div className="border-b bg-card">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-3 px-6 py-3">
           <input
             className="w-8 text-2xl outline-none"
@@ -236,6 +267,45 @@ export function DatabasePage({
             }}
             placeholder="Banco de dados"
           />
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <Input
+                className="h-8 w-44 pl-8 text-xs"
+                placeholder="Filtrar registros..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <Button size="sm" variant="outline" className="h-8 text-xs">
+                    {sortFieldId ? `Ordem: ${fields.find(f => f.id === sortFieldId)?.name}` : "Ordenar"}
+                  </Button>
+                }
+              />
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => { setSortFieldId(null); }}>
+                  Sem ordenação
+                </DropdownMenuItem>
+                {visibleFields.map((f) => (
+                  <DropdownMenuItem
+                    key={f.id}
+                    onClick={() => {
+                      if (sortFieldId === f.id) {
+                        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+                      } else {
+                        setSortFieldId(f.id);
+                        setSortOrder("asc");
+                      }
+                    }}
+                  >
+                    {f.name} {sortFieldId === f.id ? (sortOrder === "asc" ? "(A-Z)" : "(Z-A)") : ""}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <div className="flex items-center gap-1 rounded-lg bg-muted p-1">
             <ViewButton active={config.view === "table"} onClick={() => saveConfig({ view: "table" })} icon={<Table2 className="h-4 w-4" />} label="Tabela" />
             <ViewButton active={config.view === "board"} onClick={() => saveConfig({ view: "board" })} icon={<KanbanSquare className="h-4 w-4" />} label="Quadro" />

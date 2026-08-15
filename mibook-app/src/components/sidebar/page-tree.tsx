@@ -36,6 +36,8 @@ function PageIcon({ v }: { v: ViewItem }) {
   );
 }
 
+import { motion, AnimatePresence } from "framer-motion";
+
 function TreeNode({ node, depth }: { node: TreeNode; depth: number }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -69,11 +71,15 @@ function TreeNode({ node, depth }: { node: TreeNode; depth: number }) {
   }
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: -2 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.15 }}
+    >
       <div
-        className={`group flex items-center gap-0.5 rounded-md px-2 py-1 text-[13px] ${
+        className={`group flex items-center gap-0.5 rounded-md px-2 py-1 text-[13px] transition-colors ${
           active
-            ? "bg-accent font-medium text-accent-foreground"
+            ? "bg-accent font-medium text-accent-foreground shadow-xs"
             : "text-foreground/80 hover:bg-accent/60"
         }`}
         style={{ paddingLeft: `${8 + depth * 14}px` }}
@@ -156,14 +162,21 @@ function TreeNode({ node, depth }: { node: TreeNode; depth: number }) {
       {moving && (
         <MoveDialog viewId={node.id} currentParent={node.parentId} onClose={() => setMoving(false)} />
       )}
-      {hasChildren && open && (
-        <div>
-          {node.children.map((c) => (
-            <TreeNode key={c.id} node={c} depth={depth + 1} />
-          ))}
-        </div>
-      )}
-    </div>
+      <AnimatePresence>
+        {hasChildren && open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {node.children.map((c) => (
+              <TreeNode key={c.id} node={c} depth={depth + 1} />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 

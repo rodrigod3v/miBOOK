@@ -89,6 +89,7 @@ function Topbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [membersOpen, setMembersOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [trashOpen, setTrashOpen] = useState(false);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -121,9 +122,16 @@ function Topbar() {
         <Settings className="h-4 w-4" />
       </Button>
       <ThemeToggle />
-      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+      <SearchDialog
+        open={searchOpen}
+        onOpenChange={setSearchOpen}
+        onOpenMembers={() => setMembersOpen(true)}
+        onOpenSettings={() => setSettingsOpen(true)}
+        onOpenTrash={() => setTrashOpen(true)}
+      />
       <MembersDialog open={membersOpen} onOpenChange={setMembersOpen} />
       <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
+      <TrashDialog open={trashOpen} onOpenChange={setTrashOpen} />
     </header>
   );
 }
