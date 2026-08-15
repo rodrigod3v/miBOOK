@@ -48,72 +48,99 @@
 }
 
 :root {
-  --background: #F8FAFC;
-  --foreground: #0F172A;
-  --card: #FFFFFF;
-  --card-foreground: #0F172A;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
-  --primary: #3B82F6;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F1F5F9;
-  --secondary-foreground: #0F172A;
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;
-  --accent: #EFF6FF;
-  --accent-foreground: #3B82F6;
-  --destructive: #EF4444;
-  --border: #E2E8F0;
-  --input: #E2E8F0;
-  --ring: #3B82F6;
-  --chart-1: #3B82F6;
-  --chart-2: #60A5FA;
-  --chart-3: #93C5FD;
-  --chart-4: #BFDBFE;
-  --chart-5: #DBEAFE;
-  --radius: 0.75rem;
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #0F172A;
-  --sidebar-primary: #3B82F6;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F1F5F9;
-  --sidebar-accent-foreground: #0F172A;
-  --sidebar-border: #E2E8F0;
-  --sidebar-ring: #3B82F6;
+  --background: #051424;
+  --foreground: #d4e4fa;
+  --card: #122131;
+  --card-foreground: #d4e4fa;
+  --popover: #122131;
+  --popover-foreground: #d4e4fa;
+  --primary: #adc6ff;
+  --primary-foreground: #002e6a;
+  --secondary: #bec6e0;
+  --secondary-foreground: #131b2e;
+  --muted: #1c2b3c;
+  --muted-foreground: #c2c6d6;
+  --accent: #1c2b3c;
+  --accent-foreground: #adc6ff;
+  --destructive: #ffb4ab;
+  --border: #424754;
+  --input: #424754;
+  --ring: #4d8eff;
+  --chart-1: #adc6ff;
+  --chart-2: #bec6e0;
+  --chart-3: #bcc7de;
+  --chart-4: #4d8eff;
+  --chart-5: #005ac2;
+  --radius: 0.5rem;
+  --sidebar: #122131;
+  --sidebar-foreground: #d4e4fa;
+  --sidebar-primary: #adc6ff;
+  --sidebar-primary-foreground: #002e6a;
+  --sidebar-accent: #1c2b3c;
+  --sidebar-accent-foreground: #d4e4fa;
+  --sidebar-border: #424754;
+  --sidebar-ring: #4d8eff;
 }
 
 .dark {
-  --background: #0F172A;
-  --foreground: #F8FAFC;
-  --card: #1E293B;
-  --card-foreground: #F8FAFC;
-  --popover: #1E293B;
-  --popover-foreground: #F8FAFC;
-  --primary: #3B82F6;
-  --primary-foreground: #FFFFFF;
-  --secondary: #1E293B;
-  --secondary-foreground: #F8FAFC;
-  --muted: #1E293B;
-  --muted-foreground: #94A3B8;
-  --accent: #1E293B;
-  --accent-foreground: #60A5FA;
-  --destructive: #F87171;
-  --border: #334155;
-  --input: #334155;
-  --ring: #3B82F6;
-  --chart-1: #3B82F6;
-  --chart-2: #60A5FA;
-  --chart-3: #93C5FD;
-  --chart-4: #BFDBFE;
-  --chart-5: #DBEAFE;
-  --sidebar: #0F172A;
-  --sidebar-foreground: #F8FAFC;
-  --sidebar-primary: #3B82F6;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #1E293B;
-  --sidebar-accent-foreground: #F8FAFC;
-  --sidebar-border: #1E293B;
-  --sidebar-ring: #3B82F6;
+  --background: #051424;
+  --foreground: #d4e4fa;
+  --card: #122131;
+  --card-foreground: #d4e4fa;
+  --popover: #122131;
+  --popover-foreground: #d4e4fa;
+  --primary: #adc6ff;
+  --primary-foreground: #002e6a;
+  --secondary: #bec6e0;
+  --secondary-foreground: #131b2e;
+  --muted: #1c2b3c;
+  --muted-foreground: #c2c6d6;
+  --accent: #1c2b3c;
+  --accent-foreground: #adc6ff;
+  --destructive: #ffb4ab;
+  --border: #424754;
+  --input: #424754;
+  --ring: #4d8eff;
+  --chart-1: #adc6ff;
+  --chart-2: #bec6e0;
+  --chart-3: #bcc7de;
+  --chart-4: #4d8eff;
+  --chart-5: #005ac2;
+  --sidebar: #122131;
+  --sidebar-foreground: #d4e4fa;
+  --sidebar-primary: #adc6ff;
+  --sidebar-primary-foreground: #002e6a;
+  --sidebar-accent: #1c2b3c;
+  --sidebar-accent-foreground: #d4e4fa;
+  --sidebar-border: #424754;
+  --sidebar-ring: #4d8eff;
+}
+
+.glass-panel {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: rgba(39, 54, 71, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary {
+  background-color: #005ac2;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
 }
 
 @layer base {

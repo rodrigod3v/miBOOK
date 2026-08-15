@@ -103,22 +103,36 @@ function Topbar() {
   }, []);
 
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 border-b px-3">
-      <div className="flex min-w-0 flex-1 items-center gap-2">
-        {current?.icon && <span className="text-base">{current.icon}</span>}
-        <span className="truncate text-sm font-medium">{current?.name || activeWs?.name}</span>
+    <header className="flex h-16 shrink-0 items-center gap-3 border-b border-[#424754]/30 bg-[#051424]/80 backdrop-blur-md px-6 z-50">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        {current?.icon ? (
+          <span className="text-xl">{current.icon}</span>
+        ) : (
+          <span className="material-symbols-outlined text-primary text-xl">dataset</span>
+        )}
+        <div className="flex flex-col">
+          <span className="truncate text-sm font-bold text-[#d4e4fa] tracking-tight">{current?.name || activeWs?.name}</span>
+          <span className="text-[11px] text-[#c2c6d6] font-mono">Enterprise Command</span>
+        </div>
       </div>
       <ConnectionDot />
       <PresenceAvatars viewId={viewId} />
-      <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground" onClick={() => setSearchOpen(true)}>
-        <Search className="h-4 w-4" />
+      <Button
+        variant="outline"
+        size="sm"
+        className="gap-2 text-[#c2c6d6] border-[#424754]/50 bg-[#1c2b3c]/60 hover:bg-[#273647] hover:text-[#d4e4fa]"
+        onClick={() => setSearchOpen(true)}
+      >
+        <Search className="h-4 w-4 text-primary" />
         <span className="hidden sm:inline">Buscar</span>
-        <kbd className="hidden rounded border bg-muted px-1.5 text-[10px] sm:inline">Ctrl K</kbd>
+        <kbd className="hidden rounded border border-[#424754] bg-[#0d1c2d] px-1.5 text-[10px] sm:inline text-primary">
+          Ctrl K
+        </kbd>
       </Button>
-      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setMembersOpen(true)}>
+      <Button variant="ghost" size="icon" className="h-8 w-8 text-[#c2c6d6] hover:text-primary" onClick={() => setMembersOpen(true)}>
         <Users className="h-4 w-4" />
       </Button>
-      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSettingsOpen(true)}>
+      <Button variant="ghost" size="icon" className="h-8 w-8 text-[#c2c6d6] hover:text-primary" onClick={() => setSettingsOpen(true)}>
         <Settings className="h-4 w-4" />
       </Button>
       <ThemeToggle />
@@ -144,21 +158,21 @@ function Sidebar() {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
-    <aside className="flex w-64 shrink-0 flex-col border-r bg-sidebar text-sidebar-foreground">
-      <div className="p-2">
+    <aside className="flex w-[280px] shrink-0 flex-col border-r border-[#424754]/20 bg-[#122131] text-[#d4e4fa] backdrop-blur-xl">
+      <div className="p-3 border-b border-[#424754]/20">
         <WorkspaceSwitcher />
       </div>
-      <div className="flex-1 space-y-4 overflow-y-auto px-2 pb-4">
+      <div className="flex-1 space-y-4 overflow-y-auto px-3 pb-4 pt-3">
         <Section label="Favoritos">
           <FavoritesList />
         </Section>
         <Section label="Páginas">
-          <div className="mb-1 flex items-center justify-between px-2">
+          <div className="mb-2 flex items-center justify-between px-2">
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={
-                  <Button variant="ghost" size="icon" className="h-6 w-6">
-                    <Plus className="h-4 w-4" />
+                  <Button variant="ghost" size="sm" className="h-7 px-2 text-xs font-semibold text-primary hover:bg-[#1c2b3c]">
+                    <Plus className="mr-1 h-3.5 w-3.5" /> Nova
                   </Button>
                 }
               />
@@ -169,7 +183,7 @@ function Sidebar() {
                     router.push(`/app/workspace/${activeWs!.id}/view/${v.id}`);
                   }}
                 >
-                  <FileText className="mr-2 h-4 w-4" /> Nova página
+                  <FileText className="mr-2 h-4 w-4 text-blue-400" /> Nova página
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={async () => {
@@ -177,7 +191,7 @@ function Sidebar() {
                     router.push(`/app/workspace/${activeWs!.id}/view/${v.id}`);
                   }}
                 >
-                  <Database className="mr-2 h-4 w-4" /> Novo banco de dados
+                  <Database className="mr-2 h-4 w-4 text-indigo-400" /> Novo banco de dados
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -185,25 +199,25 @@ function Sidebar() {
           <PageTree />
         </Section>
       </div>
-      <div className="border-t p-2">
+      <div className="border-t border-[#424754]/20 p-3 bg-[#0d1c2d]/50">
         <div className="flex items-center gap-1">
-          <Button variant="ghost" size="sm" className="flex-1 justify-start gap-2 text-muted-foreground" onClick={() => setTrashOpen(true)}>
-            <Trash2 className="h-4 w-4" /> Lixeira
+          <Button variant="ghost" size="sm" className="flex-1 justify-start gap-2 text-xs text-[#c2c6d6] hover:text-[#d4e4fa]" onClick={() => setTrashOpen(true)}>
+            <Trash2 className="h-3.5 w-3.5" /> Lixeira
           </Button>
-          <Button variant="ghost" size="sm" className="flex-1 justify-start gap-2 text-muted-foreground" onClick={() => setMembersOpen(true)}>
-            <Users className="h-4 w-4" /> Membros
+          <Button variant="ghost" size="sm" className="flex-1 justify-start gap-2 text-xs text-[#c2c6d6] hover:text-[#d4e4fa]" onClick={() => setMembersOpen(true)}>
+            <Users className="h-3.5 w-3.5" /> Membros
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground" onClick={() => setSettingsOpen(true)}>
-            <Settings className="h-4 w-4" />
+          <Button variant="ghost" size="icon" className="h-7 w-7 text-[#c2c6d6] hover:text-[#d4e4fa]" onClick={() => setSettingsOpen(true)}>
+            <Settings className="h-3.5 w-3.5" />
           </Button>
         </div>
-        <div className="mt-2 flex items-center gap-2 rounded-md px-2 py-1.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+        <div className="mt-3 flex items-center gap-2.5 rounded-lg border border-[#424754]/30 bg-[#1c2b3c]/50 p-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[#005ac2] text-xs font-bold text-white shadow-sm">
             {(user.name || user.email)[0]?.toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
-            <div className="truncate text-xs font-medium">{user.name}</div>
-            <div className="truncate text-[11px] text-muted-foreground">{user.email}</div>
+            <div className="truncate text-xs font-semibold text-[#d4e4fa]">{user.name}</div>
+            <div className="truncate text-[11px] text-[#c2c6d6]">{user.email}</div>
           </div>
         </div>
       </div>
