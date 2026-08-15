@@ -1,12 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  BlockNoteViewRaw,
-  useCreateBlockNote,
-} from "@blocknote/react";
+import { useCreateBlockNote } from "@blocknote/react";
+import { BlockNoteView } from "@blocknote/mantine";
 import type { Block, PartialBlock } from "@blocknote/core";
 import "@blocknote/react/style.css";
+import "@blocknote/mantine/style.css";
 import { useTheme } from "next-themes";
 import { Clock, History, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -208,7 +207,7 @@ export function BlockEditor({
         />
       </div>
 
-      <BlockNoteViewRaw editor={editor} theme={(theme as "light" | "dark") || "light"} onChange={handleChange} />
+      <BlockNoteView editor={editor} theme={theme === "light" ? "light" : "dark"} onChange={handleChange} />
 
       <Dialog open={historyOpen} onOpenChange={setHistoryOpen}>
         <DialogContent className="max-w-md">

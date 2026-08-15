@@ -143,6 +143,16 @@
   opacity: 0.9;
 }
 
+.bn-container[data-theme="dark"] {
+  --bn-colors-editor-background: transparent;
+  --bn-colors-menu-background: #122131;
+  --bn-colors-menu-text: #d4e4fa;
+  --bn-colors-tooltip-background: #1c2b3c;
+  --bn-colors-tooltip-text: #d4e4fa;
+  --bn-colors-hovered-background: #1c2b3c;
+  --bn-colors-selected-background: #273647;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
